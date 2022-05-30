@@ -31,7 +31,7 @@ RUN ./mvnw package -Dlicense.skip=true -DskipTests && rm -rf ~/.m2
 FROM eclipse-temurin:11-jre
 MAINTAINER Pavol Loffay <ploffay@redhat.com>
 ENV APP_HOME /app/
-COPY --from=builder $APP_HOME/jaeger-spark-dependencies/target/jaeger-spark-dependencies-0.0.1-SNAPSHOT.jar $APP_HOME/
+COPY --from=builder $APP_HOME/jaeger-spark-dependencies/target/jaeger-spark-dependencies-0.0.2-SNAPSHOT.jar $APP_HOME/
 
 WORKDIR $APP_HOME
 
@@ -41,4 +41,4 @@ RUN chgrp root /etc/passwd && chmod g+rw /etc/passwd
 USER 185
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD java ${JAVA_OPTS} -jar $APP_HOME/jaeger-spark-dependencies-0.0.1-SNAPSHOT.jar
+CMD java ${JAVA_OPTS} -jar $APP_HOME/jaeger-spark-dependencies-0.0.2-SNAPSHOT.jar

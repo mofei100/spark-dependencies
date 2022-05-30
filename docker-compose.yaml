@@ -5,7 +5,7 @@ services:
     environment:
       STORAGE: elasticsearch
       ES_NODES: http://192.168.0.12:9200
-    image: spark-dependencies
+    image: spark-dependency
     restart: on-failure
     deploy:
       resources:

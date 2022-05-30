@@ -15,6 +15,8 @@ package io.jaegertracing.spark.dependencies;
 
 import io.jaegertracing.spark.dependencies.cassandra.CassandraDependenciesJob;
 import io.jaegertracing.spark.dependencies.elastic.ElasticsearchDependenciesJob;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -27,16 +29,20 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public final class DependenciesSparkJob {
+
+    private static final Logger log = LoggerFactory.getLogger(DependenciesSparkJob.class);
+
     private static ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(2);
 
     public static void main(String[] args) throws UnsupportedEncodingException {
+        log.info("project started success");
         String storage = System.getenv("STORAGE");
         if (storage == null) {
             throw new IllegalArgumentException("Missing environmental variable STORAGE");
         }
         SparkTask sparkTask = new SparkTask();
         sparkTask.setStorage(storage);
-        scheduledExecutorService.scheduleWithFixedDelay(sparkTask, 10, 10, TimeUnit.SECONDS);
+        scheduledExecutorService.scheduleAtFixedRate(sparkTask, 10, 10, TimeUnit.MINUTES);
     }
 
 

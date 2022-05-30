@@ -16,6 +16,8 @@ package io.jaegertracing.spark.dependencies;
 
 import io.jaegertracing.spark.dependencies.cassandra.CassandraDependenciesJob;
 import io.jaegertracing.spark.dependencies.elastic.ElasticsearchDependenciesJob;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -23,6 +25,7 @@ import java.net.URLDecoder;
 import java.time.LocalDate;
 
 public class SparkTask implements Runnable {
+    private static final Logger log = LoggerFactory.getLogger(SparkTask.class);
 
     private String storage;
 
@@ -37,12 +40,14 @@ public class SparkTask implements Runnable {
 
     @Override
     public void run() {
+        log.info("task run start");
         try {
             LocalDate date = LocalDate.now();
             task(storage, date);
         } catch (UnsupportedEncodingException e) {
-
+            log.error("task running error,msg:{},cause:{}", e.getMessage(), e.getCause());
         }
+        log.info("task run end");
     }
 
     private void task(String storage, LocalDate localDate) throws UnsupportedEncodingException {
