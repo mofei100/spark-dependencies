@@ -5,6 +5,8 @@ services:
     environment:
       STORAGE: elasticsearch
       ES_NODES: http://192.168.0.12:9200
+      ES_USERNAME: test
+      ES_PASSWORD: test
     image: spark-dependency
     restart: on-failure
     deploy:
