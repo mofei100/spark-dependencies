@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  spark-dependency:
+    environment:
+      STORAGE: elasticsearch
+      ES_NODES: http://192.168.0.12:9200
+    image: spark-dependencies
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          memory: 6G
